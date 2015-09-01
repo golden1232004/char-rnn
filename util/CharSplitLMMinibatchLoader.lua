@@ -2,6 +2,8 @@
 -- Modified from https://github.com/oxford-cs-ml-2015/practical6
 -- the modification included support for train/val/test splits
 
+require 'pl'
+
 local CharSplitLMMinibatchLoader = {}
 CharSplitLMMinibatchLoader.__index = CharSplitLMMinibatchLoader
 
@@ -64,6 +66,8 @@ function CharSplitLMMinibatchLoader.create(data_dir, batch_size, seq_length, spl
     local ydata = data:clone()
     ydata:sub(1,-2):copy(data:sub(2,-1))
     ydata[-1] = data[1]
+	result = data:view(batch_size, -1)
+	tmp = result:split(seq_length, 2)
     self.x_batches = data:view(batch_size, -1):split(seq_length, 2)  -- #rows = #batches
     self.nbatches = #self.x_batches
     self.y_batches = ydata:view(batch_size, -1):split(seq_length, 2)  -- #rows = #batches

@@ -17,7 +17,7 @@ require 'torch'
 require 'nn'
 require 'nngraph'
 require 'optim'
-require 'lfs'
+require 'lfs'  -- lua file system
 
 require 'util.OneHot'
 require 'util.misc'
